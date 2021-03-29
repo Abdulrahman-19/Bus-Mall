@@ -6,24 +6,26 @@ let centerIndex;
 let maxNumOfClicks=0;
 // let arr= [];
 const product = [
-  'bag',
-  'banana',
-  'bathroom',
-  'boots',
-  'breakfast',
-  'bubblegum',
-  'chair',
-  'cthulhu',
-  'dog-duck',
-  'dragon',
-  'pen',
-  'pet-sweep',
-  'scissors',
-  'shark',
-  'tauntaun',
-  'unicorn',
-  'water-can',
-  'wine-glass'
+  'bag.jpg',
+  'banana.jpg',
+  'bathroom.jpg',
+  'boots.jpg',
+  'breakfast.jpg',
+  'bubblegum.jpg',
+  'chair.jpg',
+  'cthulhu.jpg',
+  'dog-duck.jpg',
+  'dragon.jpg',
+  'pen.jpg',
+  'pet-sweep.jpg',
+  'scissors.jpg',
+  'shark.jpg',
+  'tauntaun.jpg',
+  'unicorn.jpg',
+  'water-can.jpg',
+  'wine-glass.jpg',
+  'sweep.png',
+  'usb.gif'
 ];
 
 const leftImage = document.getElementById('left-image');
@@ -35,7 +37,7 @@ const button = document.getElementById('btn');
 
 function Mall(productName){
   this.productName = productName;
-  this.path = `./assets/${productName}.jpg`;
+  this.path = `./assets/${productName}`;
   this.votes = 0;
   this.views = 0;
   Mall.all.push(this);
