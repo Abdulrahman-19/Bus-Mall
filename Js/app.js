@@ -4,6 +4,8 @@ let leftIndex;
 let rightIndex;
 let centerIndex;
 let maxNumOfClicks=0;
+let myVotes =[];
+let myViews =[];
 // let arr= [];
 const product = [
   'bag.jpg',
@@ -52,17 +54,22 @@ console.log(Mall.all);
 function render(){
 
   leftIndex = randomNumber(0,Mall.all.length-1);
-  leftImage.src = Mall.all[leftIndex].path;
-  leftImage.alt =Mall.all[leftIndex].productName;
-  leftImage.title = Mall.all[leftIndex].productName;
-  rightIndex = randomNumber(0,Mall.all.length-1);
-  rightImage.src = Mall.all[rightIndex].path;
-  rightImage.alt =Mall.all[rightIndex].productName;
-  rightImage.title = Mall.all[rightIndex].productName;
   centerIndex = randomNumber(0,Mall.all.length-1);
-  centerImage.src = Mall.all[centerIndex].path;
-  centerImage.alt =Mall.all[centerIndex].productName;
-  centerImage.title = Mall.all[centerIndex].productName;
+  rightIndex = randomNumber(0,Mall.all.length-1);
+  if(leftIndex !== rightIndex && leftIndex!== centerIndex && rightIndex!==centerIndex){
+    leftImage.src = Mall.all[leftIndex].path;
+    leftImage.alt =Mall.all[leftIndex].productName;
+    leftImage.title = Mall.all[leftIndex].productName;
+
+    rightImage.src = Mall.all[rightIndex].path;
+    rightImage.alt = Mall.all[rightIndex].productName;
+    rightImage.title = Mall.all[rightIndex].productName;
+
+    centerImage.src = Mall.all[centerIndex].path;
+    centerImage.alt =Mall.all[centerIndex].productName;
+    centerImage.title = Mall.all[centerIndex].productName;
+  }
+
 
 
 }
@@ -78,6 +85,7 @@ function clicking(event){
       Mall.all[rightIndex].views++;
       Mall.all[centerIndex].views++;
       maxNumOfClicks++;
+
     }
     else if (event.target.id === leftImage.id){
       Mall.all[leftIndex].votes++;
@@ -94,7 +102,7 @@ function clicking(event){
       maxNumOfClicks++;
     }
   }
-  if (maxNumOfClicks<=5){
+  if (maxNumOfClicks<=25){
     console.log(x);
     render();
   }
@@ -112,10 +120,14 @@ function results(){
     const li = document.createElement('li');
     ul.appendChild(li);
     li.textContent = `${Mall.all[i].productName} had ${Mall.all[i].votes} votes, and was seen ${Mall.all[i].views} times.`;
+    myVotes.push(Mall.all[i].votes);
+    myViews.push(Mall.all[i].views);
   }
+  chartFun();
 }
 // }
-
+console.log('votes',myViews);
+console.log('viewes',myVotes);
 
 
 // console.table(Mall.all);
@@ -134,4 +146,30 @@ function randomNumber(min, max) {
 
 render();
 
+function chartFun() {
+  let ctx = document.getElementById('myChart').getContext('2d');
+  let chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'bar',
 
+    // The data for our dataset
+    data: {
+      labels: product,
+      datasets: [{
+        label: 'Product votes',
+        backgroundColor: 'red',
+        borderColor: 'rgb(255, 99, 132)',
+        data: myVotes
+      },
+      {
+        label: 'Product views',
+        backgroundColor: 'green',
+        borderColor: 'rgb(255, 99, 132)',
+        data: myViews
+      }]
+    },
+
+    // Configuration options go here
+    options: {}
+  });
+}
