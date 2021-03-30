@@ -43,13 +43,30 @@ function Mall(productName) {
   this.votes = 0;
   this.views = 0;
   Mall.all.push(this);
+  
 }
 Mall.all = [];
-
 for (let i = 0; i < product.length; i++) {
   new Mall(product[i]);
 }
-console.log(Mall.all);
+
+function setProduct(){
+  let data = JSON.stringify(Mall.all);
+  localStorage.setItem('Mall',data);
+}
+function getProduct(){
+  let stringObj = localStorage.getItem('Mall');
+  console.log('from the local storage', stringObj);
+  let normalObj = JSON.parse(stringObj);
+  console.log('after parsing', normalObj);
+  if (normalObj !== null) {
+    Mall.all = normalObj;
+    console.log(normalObj);
+  }
+  render();
+}
+
+
 
 function render() {
   arrcheck = [];
@@ -79,6 +96,7 @@ function render() {
   centerImage.alt = Mall.all[centerIndex].productName;
   centerImage.title = Mall.all[centerIndex].productName;
 
+  setProduct();
 
 
 }
@@ -136,6 +154,7 @@ function results() {
 
 
 
+
 // console.table(Mall.all);
 function randomNumber(min, max) {
   // let rand=Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -150,7 +169,7 @@ function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-render();
+
 
 function chartFun() {
   let ctx = document.getElementById('myChart').getContext('2d');
@@ -179,3 +198,5 @@ function chartFun() {
     options: {}
   });
 }
+getProduct();
+
