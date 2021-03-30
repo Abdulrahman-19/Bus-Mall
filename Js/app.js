@@ -35,6 +35,7 @@ const centerImage = document.getElementById('center-image');
 const rightImage = document.getElementById('right-image');
 const section = document.getElementById('images-section');
 const button = document.getElementById('btn');
+const button2 = document.getElementById('reset');
 
 
 function Mall(productName) {
@@ -69,19 +70,12 @@ function getProduct(){
 
 
 function render() {
-  arrcheck = [];
+
   do {
     leftIndex = randomNumber(0, Mall.all.length - 1);
     centerIndex = randomNumber(0, Mall.all.length - 1);
     rightIndex = randomNumber(0, Mall.all.length - 1);
-    if (arrcheck.includes(leftIndex) || arrcheck.includes(centerIndex) || arrcheck.includes(rightIndex)) {
-      leftIndex = randomNumber(0, Mall.all.length - 1);
-      centerIndex = randomNumber(0, Mall.all.length - 1);
-      rightIndex = randomNumber(0, Mall.all.length - 1);
-    }
-    arrcheck.push(leftIndex, centerIndex, rightIndex);
-    console.log(arrcheck);
-  } while (leftIndex === rightIndex || leftIndex === centerIndex || rightIndex === centerIndex);
+  } while (leftIndex === rightIndex || leftIndex === centerIndex || rightIndex === centerIndex || arrcheck.includes(leftIndex) || arrcheck.includes(centerIndex) || arrcheck.includes(rightIndex));
 
 
   leftImage.src = Mall.all[leftIndex].path;
@@ -95,9 +89,9 @@ function render() {
   centerImage.src = Mall.all[centerIndex].path;
   centerImage.alt = Mall.all[centerIndex].productName;
   centerImage.title = Mall.all[centerIndex].productName;
-
-  setProduct();
-
+  arrcheck = [];
+  arrcheck.push(leftIndex, centerIndex, rightIndex);
+  console.log(arrcheck);
 
 }
 
@@ -133,6 +127,7 @@ function clicking(event) {
   }
   else {
     section.removeEventListener('click', clicking);
+    setProduct();
   }
 
 }
@@ -169,6 +164,10 @@ function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+button2.addEventListener('click', function(){
+  localStorage.clear();
+  location.reload();
+});
 
 
 function chartFun() {
